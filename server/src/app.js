@@ -5,7 +5,6 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const {sequelize} = require('./models')
 const config = require('./config/config')
-const passport = require('passport')
 
 /* eslint-env node */
 app.use(cors())
@@ -14,9 +13,7 @@ app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(express.json()) //=> req.body (diff from video part-2)
 
-require('./passport')(passport);
-app.use(passport.initialize());
-// app.use(passport.session());
+app.use(require("./middleware/auth").verify);
 
 require('./routes')(app)
 
