@@ -26,4 +26,13 @@ module.exports = (app) => {
     app.get('/user/loans',
         isAuthenticated,
         LoanController.findAllForUser);
+
+    app.put('/admin/loan',
+    // isAdminAuthenticated,
+    LoanController.update);
+
+    app.delete('/admin/loan',
+        // isAdminAuthenticated,
+        LoanController.delete);
+    
 }

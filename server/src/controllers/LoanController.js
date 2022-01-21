@@ -81,4 +81,41 @@ module.exports = {
             loan: createdLoan
         });
     },
+
+    delete: async (req, res) => {
+        const { id } = req.body.loan;
+
+        if (!id) 
+            return res.status(400).send({error: "xxx"});
+
+        // make sure it exists
+        const loan = await models.Loan.findOne({where: {id}});
+        if (!loan) return res.status(400).send({error: "The loan doesn't exist."});
+        
+        loan
+            .destroy()
+            .then((loan) => {
+                return res.status(200).send({loan});
+            })
+            .catch((err) => {return res.status(500).send({error: err})});
+    },
+
+    update: async (req, res) => {
+        const {id, name, details, amount} = req.body.loan;
+
+        // validation
+        if (!id || !name || !details || !amount) 
+            return res.status(400).send({error: "xxx"});
+
+        // make sure it exists
+        const loan = await models.Loan.findOne({where: {id}});
+        if (!loan) return res.status(400).send({error: "The loan doesn't exist."});
+        
+        loan
+            .update({name, details, amount})
+            .then((loan) => {
+                return res.status(200).send({loan});
+            })
+            .catch((err) => {return res.status(500).send({error: err})});
+    }
 }

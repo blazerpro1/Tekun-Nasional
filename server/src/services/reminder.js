@@ -56,5 +56,5 @@ module.exports = () => {
         // console.log(takenLoans);
     };
 
-    setInterval(checkAndSendReminder, config.production ? 86400000 : 5000);
+    setInterval(checkAndSendReminder, config.production ? 86400000 : 300000);
 }
