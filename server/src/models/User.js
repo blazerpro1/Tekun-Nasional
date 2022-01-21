@@ -48,6 +48,7 @@ module.exports = (sequelize, DataTypes) => {
 
     User.associate = function(models){
         User.belongsToMany(models.Loan,{ through: "User_Loans"});
+        User.hasMany(models.Reminder);
 
         User.hasMany(models.Appeal,{
             onDelete: "cascade"

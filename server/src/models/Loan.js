@@ -18,9 +18,10 @@ module.exports = (sequelize, DataTypes) => {
 
     Loan.associate = function(models){
         Loan.belongsToMany(models.User,{ through: "User_Loans" });
-        Loan.hasMany(models.Appeal,{
+        Loan.hasMany(models.Appeal, {
             onDelete: "cascade"
         });
+        Loan.hasMany(models.Reminder);
     };
 
     return Loan;

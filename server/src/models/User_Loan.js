@@ -1,9 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
     const User_Loan = sequelize.define('User_Loans', {
         approval: {
-            type: DataTypes.BOOLEAN,
+            type: DataTypes.STRING(8),
             allowNull: false,
-            defaultValue: false,
+            defaultValue: "pending",
         },
     });
 
