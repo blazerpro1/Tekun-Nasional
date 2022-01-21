@@ -13,9 +13,10 @@ app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(express.json()) //=> req.body (diff from video part-2)
 
+require('./routes')(app)
 app.use(require("./middleware/auth").verify);
 
-require('./routes')(app)
+
 
 sequelize.sync({ force: false })
     .then(() => {

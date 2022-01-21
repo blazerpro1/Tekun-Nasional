@@ -6,24 +6,79 @@ module.exports = {
         // const user = req.user;
 
         const loans = await models.Loan.findAll({});
-        return res.send({loans});
+        return res.send({
+            loans
+        });
+    },
+
+    findAllForUser: async (req, res) => {
+        const userId = req.auth.id;
+        const user = await models.User.findOne({
+            where: {
+                id: userId
+            }
+        });
+        // TODO: check user exist
+        const relatedUserLoans = await models.User_Loans.findAll({
+            where: {
+                UserId: user.id
+            }
+        });
+        const userLoans = [];
+        new Promise((resolve, reject) => {
+            relatedUserLoans.forEach((relatedUserLoanRow, index) => {
+                models.Loan.findOne({
+                    where: {
+                        id: relatedUserLoanRow.LoanId
+                    }
+                }).then((userLoan) => {
+                    userLoans.push(userLoan);
+                    if (index === relatedUserLoans.length - 1) resolve();
+                })
+            });
+        }).then(() => {
+            return res.status(200).send({
+                loans: userLoans
+            });
+        })
     },
 
     create: async (req, res) => {
-        const { userId, loan } = req.body;
-        const { name, details, amount} = loan;
+        const {
+            userId,
+            loan
+        } = req.body;
+        const {
+            name,
+            details,
+            amount
+        } = loan;
         if (!name || !details || amount == undefined || (amount < 0.0) || userId == undefined) {
-            return res.status(400).send({error: ""});
+            return res.status(400).send({
+                error: ""
+            });
         }
 
-        const user = await models.User.findOne({where: {id: userId}});
+        const user = await models.User.findOne({
+            where: {
+                id: userId
+            }
+        });
         if (!user) {
-            return res.status(400).send({error: ""});
+            return res.status(400).send({
+                error: ""
+            });
         }
 
-        const createdLoan = await models.Loan.create({name, details, amount});
+        const createdLoan = await models.Loan.create({
+            name,
+            details,
+            amount
+        });
 
         const createJoins = await user.addLoan(createdLoan);
-        return res.status(201).send({loan: createdLoan});
+        return res.status(201).send({
+            loan: createdLoan
+        });
     },
 }

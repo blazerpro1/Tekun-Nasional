@@ -17,10 +17,6 @@
 
 module.exports = {
   isAuthenticated: async (req, res, next) => {
-   
-    console.log('===')
-    console.log(req.auth)
-
     if (!req.auth) {
        res.status(403).send({
          error: 'You do not have access to this resource'
@@ -37,9 +33,6 @@ module.exports = {
 
   isAdminAuthenticated: async (req, res, next) => {
     // const userRole = user.role;
-    console.log('===')
-    console.log(req.auth)
-
     if (!req.auth) {
        res.status(403).send({
          error: 'You do not have access to this resource'
