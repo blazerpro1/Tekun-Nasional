@@ -20,5 +20,12 @@ module.exports = (sequelize, DataTypes) => {
     //         }
     //     })
     // }
+
+    User_Loan.associate = function(models){
+        User_Loan.hasMany(models.Reminder, {
+            onDelete: "cascade"
+        });
+    };
+
     return User_Loan;
 }

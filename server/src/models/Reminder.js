@@ -7,8 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Reminder.associate = function(models){
-        Reminder.belongsTo(models.User);
-        Reminder.belongsTo(models.Loan);
+        Reminder.belongsTo(models.User_Loans);
     };
     return Reminder;
 }

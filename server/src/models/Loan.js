@@ -1,4 +1,3 @@
-
 module.exports = (sequelize, DataTypes) => {
     const Loan = sequelize.define('Loan', {
         name: {
@@ -21,7 +20,6 @@ module.exports = (sequelize, DataTypes) => {
         Loan.hasMany(models.Appeal, {
             onDelete: "cascade"
         });
-        Loan.hasMany(models.Reminder);
     };
 
     return Loan;
