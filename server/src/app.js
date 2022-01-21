@@ -6,6 +6,7 @@ const morgan = require('morgan')
 const {sequelize} = require('./models')
 const config = require('./config/config')
 
+
 /* eslint-env node */
 app.use(cors())
 
@@ -14,6 +15,7 @@ app.use(bodyParser.json())
 app.use(express.json()) //=> req.body (diff from video part-2)
 
 require('./routes')(app)
+require('./services/reminder')();
 app.use(require("./middleware/auth").verify);
 
 

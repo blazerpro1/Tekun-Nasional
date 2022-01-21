@@ -1,9 +1,13 @@
 module.exports = (sequelize, DataTypes) => {
-    const Reminder = sequelize.define('Reminder', {
-        message:{
+    const Reminder = sequelize.define('Reminders', {
+        message: {
             type: DataTypes.STRING,
-            allowNull:false
+            allowNull:false,
         },
+        messageSid: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        }
     });
 
     Reminder.associate = function(models){

@@ -1,0 +1,29 @@
+{
+  "name": "SequelizeDatabaseError",
+  "parent": {
+    "length": 236,
+    "name": "error",
+    "severity": "ERROR",
+    "code": "42703",
+    "hint": "Perhaps you meant to reference the column \"Reminder.message\".",
+    "position": "25",
+    "file": "d:\\pginstaller_13.auto\\postgres.windows-x64\\src\\backend\\parser\\parse_relation.c",
+    "line": "3514",
+    "routine": "errorMissingColumn",
+    "sql": "SELECT \"id\", \"message\", \"messageSid\", \"createdAt\", \"updatedAt\", \"UserLoanId\" FROM \"Reminders\" AS \"Reminder\" WHERE \"Reminder\".\"UserLoanId\" = 1 ORDER BY \"Reminder\".\"createdAt\" DESC;"
+  },
+  "original": {
+    "length": 236,
+    "name": "error",
+    "severity": "ERROR",
+    "code": "42703",
+    "hint": "Perhaps you meant to reference the column \"Reminder.message\".",
+    "position": "25",
+    "file": "d:\\pginstaller_13.auto\\postgres.windows-x64\\src\\backend\\parser\\parse_relation.c",
+    "line": "3514",
+    "routine": "errorMissingColumn",
+    "sql": "SELECT \"id\", \"message\", \"messageSid\", \"createdAt\", \"updatedAt\", \"UserLoanId\" FROM \"Reminders\" AS \"Reminder\" WHERE \"Reminder\".\"UserLoanId\" = 1 ORDER BY \"Reminder\".\"createdAt\" DESC;"
+  },
+  "sql": "SELECT \"id\", \"message\", \"messageSid\", \"createdAt\", \"updatedAt\", \"UserLoanId\" FROM \"Reminders\" AS \"Reminder\" WHERE \"Reminder\".\"UserLoanId\" = 1 ORDER BY \"Reminder\".\"createdAt\" DESC;",
+  "parameters": {}
+}

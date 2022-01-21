@@ -5,14 +5,16 @@ const accountSid = 'AC6bfd91d3888044033f2392eb5ebdce74';
 const client = require('twilio')(accountSid, authToken);
 
 module.exports = {
-  message: async (phoneNumber, messageBody) => {
-    client.messages
+  sendSms: async (phoneNumber, messageBody) => {
+    console.log(`[SMS] ${phoneNumber}: ${messageBody}`);
+    const response = await client.messages
       .create({
         to: phoneNumber,
         body: messageBody,
         messagingServiceSid: messageSID,
       })
-      .then(message => console.log(message.sid))
-      .done();
+    return response;
+    // .then(message => console.log(message.sid))
+    // .done();
   }
 }
