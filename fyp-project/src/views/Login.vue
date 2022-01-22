@@ -43,6 +43,7 @@
                           color="primary"
                           autocomplete="true"
                           class="mt-5"
+                          append-icon = "mdi-email"
                         />
                         <v-text-field
                           v-model="password1"
@@ -56,15 +57,9 @@
                           @click:append="show3 = !show3"
                         />
                         <v-row>
-                          <v-col cols="12" sm="7">
-                            <v-checkbox
-                              label="Remember Me"
-                              class="mt-n1"
-                              color="primary"
-                            >
-                            </v-checkbox>
+                          <v-col cols="12" sm="6">
                           </v-col>
-                          <v-col cols="12" sm="5">
+                          <v-col cols="12" sm="6">
                             <v-btn text small @click.native="$router.push('/forgotPassword')" class="caption primary--text"
                               >Forgot password
                             </v-btn>
@@ -73,7 +68,7 @@
                         <!-- <br> -->
                         <div class ="primary text-center white--text" v-html="error2"></div>
                         <br>
-                        <v-btn color="primary" dark block tile @click.native="login">Log in</v-btn>
+                        <v-btn class="mb-6" color="primary" dark block tile @click.native="login">Log in</v-btn>
                         <!-- //code for logging using google fb twitter
                          <h5
                           class="text-center  grey--text mt-4 mb-3"
@@ -144,6 +139,7 @@
                           color="primary"
                           autocomplete="false"
                           class="mt-4"
+                          append-icon = "perm_identity"
                         />
                         <v-text-field
                           v-model="email"
@@ -153,6 +149,7 @@
                           dense
                           color="primary"
                           autocomplete="false"
+                          append-icon = "email"
                         />
                         <v-text-field
                           v-model="password"
@@ -186,6 +183,7 @@
                           dense
                           color="primary"
                           autocomplete="false"
+                          append-icon = "account_circle"
                         />
                         <v-text-field
                           v-model.trim="phoneNumber"
@@ -195,6 +193,7 @@
                           dense
                           color="primary"
                           autocomplete="false"
+                          append-icon = "local_phone"
                         />
                         <!-- <v-text-field
                           v-model="password"
@@ -223,7 +222,7 @@
                         <!-- <br> -->
                         <div class ="text-center primary--text" v-html="error"></div>
                         <br>
-                        <v-btn color="primary" dark block tile @click.native="register" >Sign up</v-btn>
+                        <v-btn class="mb-6" color="primary" dark block tile @click.native="register" >Sign up</v-btn>
 
                         <!-- <h5
                           class="text-center  grey--text mt-4 mb-3"

@@ -27,25 +27,37 @@ const routes = [
   {
     path: '/notification',
     name: 'notification list',
-    component: Notification
+    component: Notification,
+    meta: {
+      requiresAuth: true
+    }
 
   },
   {
     path: '/application',
     name: 'loan application',
-    component: Application
+    component: Application,
+    meta: {
+      requiresAuth: true
+    }
 
   },
   {
     path: '/loans',
     name: 'check loans',
-    component: Loans
+    component: Loans,
+    meta: {
+      requiresAuth: true
+    }
 
   },
   {
     path: '/appeal',
     name: 'loan appeal',
-    component: Appeal
+    component: Appeal,
+    meta: {
+      requiresAuth: true
+    }
 
   },
   {
