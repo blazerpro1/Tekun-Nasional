@@ -1,8 +1,7 @@
 const models = require("../models");
 const config = require('../config/config');
-const {
-    sendSms
-} = require("./sms");
+const { sendSms } = require("./sms");
+const { sendMail } = require("./email");
 
 module.exports = () => {
 
@@ -39,6 +38,13 @@ module.exports = () => {
                         console.error(smsErr);
                         // TODO
                     });
+
+                sendMail(thatUser.email, smsMsgContent)
+                    .then(() => {
+                    }).catch((emailErr) => {
+                        console.error(emailErr);
+                        // TODO
+                    });
             };
 
             if (reminders.length === 0 &&
@@ -56,5 +62,5 @@ module.exports = () => {
         // console.log(takenLoans);
     };
 
-    setInterval(checkAndSendReminder, config.production ? 86400000 : 300000);
+    setInterval(checkAndSendReminder, config.production ? 86400000 : 500000);
 }
