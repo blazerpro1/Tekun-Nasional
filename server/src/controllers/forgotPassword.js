@@ -59,8 +59,7 @@ module.exports = {
         
     resetPassword: async (req, res, next) => {
           try {
-            const { password, password2 } = req.body;
-            const { token } = req.params;
+            const { password, password2, token } = req.body;
             const decoded = jwt.verify(token, config.authentication.jwtSecret);
             const id = decoded.id;
             // const hash = hashPassword(password);

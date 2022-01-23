@@ -1,17 +1,18 @@
 import Api from '@/services/Api'
 
 export default {
-    register (credentials){
+    register(credentials) {
         return Api().post('register', credentials)
     },
-    login (credentials){
+    login(credentials) {
         return Api().post('login', credentials)
     },
-    forgot (credentials){
+    forgot(credentials) {
         return Api().post('forgotPassword', credentials) //SUBJECT TO CHANGE
     },
-    reset (credentials){
-        return Api().post('resetPassword:token', credentials) //SUBJECT TO CHANGE
-    }
+    reset(credentials) {
+        return Api().post(`resetPassword`, credentials,
+    ) //SUBJECT TO CHANGE
+    // `resetPassword/${credentials.token}`
 }
-
+}

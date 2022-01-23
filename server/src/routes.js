@@ -39,7 +39,7 @@ module.exports = (app) => {
     app.post('/forgotPassword', 
         forgotPassword.sendResetLink);
 
-    app.post('/resetPassword/:token', 
+    app.post('/resetPassword', 
         forgotPassword.resetPassword);
     
 }

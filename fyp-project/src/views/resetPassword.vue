@@ -68,7 +68,7 @@
 </template>
 
 <script>
-// import AuthenticationService from '@/services/AuthenticationService.js'
+import AuthenticationService from '@/services/AuthenticationService.js'
 
 export default {
   data: () => ({
@@ -76,6 +76,7 @@ export default {
     show2: false,
     password: "",
     passwordConfirm: "",
+    error: null,
     rules: {
       required: (value) => !!value || "Required.",
       min: (v) => v.length >= 8 || "Min 8 characters",
@@ -83,7 +84,27 @@ export default {
   }),
 
   methods: {
-
+    async reset() {
+      // console.log(window.location.pathname.split('/')[2]);
+      try {
+        await AuthenticationService.reset({
+          password: this.password,
+          password2: this.passwordConfirm,
+          token: window.location.pathname.split('/')[2],
+        })
+        // this.error = "Check your email for the reset password link"
+        // this.$store.dispatch('setToken', response.data.token) // SUBJECT TO CHANGE
+        // this.$store.dispatch('setUser', response.data.user) // SUBJECT TO CHANGE
+        
+        alert("Successfully changed your password!")
+        // this.$router.push('/')
+      } catch (error) {
+        this.error = error.response.data.error
+      }
+    },
+    props: {
+    source: String,
+  },
   },
 
   computed: {
