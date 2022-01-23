@@ -294,6 +294,7 @@ export default {
   methods: {
     async register() {
       try {
+        
         const response = await AuthenticationService.register({
           name: this.name,
           ic_number: this.icNumber,

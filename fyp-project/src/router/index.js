@@ -8,7 +8,7 @@ import Appeal from '../views/Appeal'
 import Login from '../views/Login'
 import Register from '../views/signUp'
 import ForgotPassword from '../views/forgotPassword'
-import ForgotPassword2 from '../views/forgotPassword2'
+import resetPassword from '../views/resetPassword'
 import test from '../views/testing'
 import store from '@/store/store'
 
@@ -86,9 +86,9 @@ const routes = [
     component: test,
   },
   {
-    path: '/forgotPassword2',
-    name: 'forgotPassword2',
-    component: ForgotPassword2,
+    path: '/resetPassword/:token',
+    name: 'resetPassword',
+    component: resetPassword,
   }
 ]
 

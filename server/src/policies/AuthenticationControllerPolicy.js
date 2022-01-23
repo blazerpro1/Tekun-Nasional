@@ -9,11 +9,13 @@ module.exports = {
             email: Joi.string().email(),
             password: Joi.string().pattern(
                 new RegExp('^[a-zA-Z0-9]{8,32}$')
-            ).required()
-
-        })
-
+            ).required(),
+            confirmPassword: Joi.string().pattern(
+                new RegExp('^[a-zA-Z0-9]{8,32}$')
+            ).required().valid(Joi.ref('password'))
+    })
         const {error} = schema.validate(req.body)
+
 
         if (error) {
             switch (error.details[0].context.key) {
@@ -45,6 +47,11 @@ module.exports = {
                 <br>
                 2. It must be at least 8 characters in length and not greater than 32 characters in length.
               `
+                    })
+                    break
+                case 'confirmPassword':
+                    res.status(400).send({
+                        error: 'Password and Confirm Password must be the same'
                     })
                     break
                 default:

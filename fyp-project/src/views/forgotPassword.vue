@@ -41,7 +41,9 @@
                           autocomplete="false"
                           class="mt-5"
                         />
-                        <v-btn color="primary" dark block tile @click.native="reset">Reset</v-btn>
+                        <div class ="text-center primary--text" v-html="error"></div>
+                        <br>
+                        <v-btn color="primary" dark block tile @click.native="forgot">Reset</v-btn>
                       </v-col>
                     </v-row>
                   </v-card-text>
@@ -54,9 +56,11 @@
 </template>
 
 <script>
+import AuthenticationService from '@/services/AuthenticationService.js'
 export default {
     data: () => ({
     email:"",
+    error: null,
     rules: {
       required: (value) => !!value || "Required.",
       email: (value) => {
@@ -64,7 +68,26 @@ export default {
         return pattern.test(value) || "Invalid e-mail.";
       }
     },
-  })
+  }),
+
+  methods: {
+    async forgot() {
+      try {
+        await AuthenticationService.forgot({
+          email: this.email,
+        })
+        // this.error = "Check your email for the reset password link"
+        // this.$store.dispatch('setToken', response.data.token) // SUBJECT TO CHANGE
+        // this.$store.dispatch('setUser', response.data.user) // SUBJECT TO CHANGE
+        // this.$router.push('/')
+      } catch (error) {
+        this.error = error.response.data.error
+      }
+    },
+    props: {
+    source: String,
+  },
+  },
 }
 </script>
 

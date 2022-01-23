@@ -19,6 +19,13 @@ module.exports = {
             }
         });
         // TODO: check user exist
+
+        if (!user) {
+            return res.status(403).send({
+              error: 'Unable to retrieve loan.'
+            })
+        }
+
         const relatedUserLoans = await models.User_Loans.findAll({
             where: {
                 UserId: user.id

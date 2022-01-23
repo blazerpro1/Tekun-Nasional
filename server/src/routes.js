@@ -1,6 +1,7 @@
 const AuthenticationController = require('./controllers/AuthenticationController')
 const AuthenticationControllerPolicy = require('./policies/AuthenticationControllerPolicy');
 const LoanController = require("./controllers/LoanController");
+const forgotPassword = require("./controllers/forgotPassword");
 
 const {
     isAuthenticated,
@@ -28,11 +29,17 @@ module.exports = (app) => {
         LoanController.findAllForUser);
 
     app.put('/admin/loan',
-    // isAdminAuthenticated,
-    LoanController.update);
+        // isAdminAuthenticated,
+        LoanController.update);
 
     app.delete('/admin/loan',
         // isAdminAuthenticated,
         LoanController.delete);
+
+    app.post('/forgotPassword', 
+        forgotPassword.sendResetLink);
+
+    app.post('/resetPassword/:token', 
+        forgotPassword.resetPassword);
     
 }

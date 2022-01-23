@@ -1,11 +1,13 @@
+require('dotenv').config();
 const nodemailer = require('nodemailer')
 const {
     google
 } = require('googleapis')
 
+
 // These id's and secrets should come from .env file.
-const CLIENT_ID = '156142240914-gmejk58a9ur3er51peh4tlg5cgohg8ur.apps.googleusercontent.com';
-const CLEINT_SECRET = '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';
+const CLIENT_ID = process.env.EMAIL_CLIENT_ID;
+const CLEINT_SECRET = process.env.EMAIL_CLIENT_SECRET;
 const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
 const REFRESH_TOKEN = '1//04t6aRHOAqlEHCgYIARAAGAQSNwF-L9IrdognD2DkmcKbuOU5DzpefXogAOSJbq5FjLdV8iaNjew0G7TyqlcLMrjv6k7KQL6XuSc';
 
@@ -52,6 +54,7 @@ oAuth2Client.setCredentials({
 
 
 module.exports = {
+
     sendMail: async (email, messageBody) => {
         console.log(`[Email] ${email}: ${messageBody}`);
         try {
@@ -70,11 +73,11 @@ module.exports = {
             });
 
             const mailOptions = {
-                from: 'Mak kau ijau <tekuntesting123@gmail.com>',
+                from: 'TEKUN NASIONAL <tekuntesting123@gmail.com>',
                 to: email,
                 subject: 'TEKUN NASIONAL',
                 text: messageBody,
-                html: `<h1>${messageBody}</h1>`,
+                html: `<div>${messageBody}</div>`,
             };
 
             const result = await transport.sendMail(mailOptions);
@@ -85,5 +88,43 @@ module.exports = {
             return error;
         }
 
-    }
+    },
+
+    //WHY DOESN'T THIS WORK? LOL
+    // sendResetMail: async (email, messageBody) => {
+    //     console.log(`[ResetEmail] ${email}: ${messageBody}`);
+    //     try {
+    //         const accessToken = await oAuth2Client.getAccessToken();
+
+    //         const transport = nodemailer.createTransport({
+    //             service: 'gmail',
+    //             auth: {
+    //                 type: 'OAuth2',
+    //                 user: 'tekuntesting123@gmail.com',
+    //                 clientId: CLIENT_ID,
+    //                 clientSecret: CLEINT_SECRET,
+    //                 refreshToken: REFRESH_TOKEN,
+    //                 accessToken: accessToken,
+    //             },
+    //         });
+
+    //         const mailOptions = {
+    //             from: 'TEKUN NASIONAL <tekuntesting123@gmail.com>',
+    //             to: email,
+    //             subject: 'TEKUN NASIONAL',
+    //             text: messageBody,
+    //             html: `<h1>${messageBody}</h1>`,
+    //         };
+    //         console.log("cibai")
+    //         const result = await transport.sendResetMail(mailOptions);
+    //         console.log("cibai2")
+            
+
+    //         return result;
+    //     } catch (error) {
+    //         return error;
+    //     }
+
+    // },
+
 }
