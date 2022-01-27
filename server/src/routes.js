@@ -1,12 +1,16 @@
 const AuthenticationController = require('./controllers/AuthenticationController')
 const AuthenticationControllerPolicy = require('./policies/AuthenticationControllerPolicy');
 const LoanController = require("./controllers/LoanController");
+const AppealController = require("./controllers/AppealController");
 const forgotPassword = require("./controllers/forgotPassword");
+const AnnouncementController = require('./controllers/AnnouncementController');
+const UserController = require('./controllers/UserController');
 
 const {
     isAuthenticated,
     isAdminAuthenticated
 } = require('./policies/isAuthenticated');
+
 
 module.exports = (app) => {
     app.post('/register',
@@ -41,5 +45,33 @@ module.exports = (app) => {
 
     app.post('/resetPassword', 
         forgotPassword.resetPassword);
+
+    app.get('/admin/appeals',
+        AppealController.findAll);
+
+    app.post('/user/appeal',
+        AppealController.create);
+
+    app.put('/admin/appeal',
+        AppealController.update);
+
+    app.get('/admin/announcement',
+        AnnouncementController.findAll);
+
+    app.get('/user/announcement',
+        AnnouncementController.findAll);
+
+    app.post('/admin/announcement',
+        AnnouncementController.create);
+    
+    app.delete('/admin/announcement',
+        AnnouncementController.delete);
+
+    app.put('/admin/announcement',
+        AnnouncementController.update);
+        
+    app.put('/user/profile',
+        // AuthenticationControllerPolicy.updateProfile,
+        UserController.update);
     
 }

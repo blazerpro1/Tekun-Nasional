@@ -116,7 +116,7 @@ module.exports = {
     //             html: `<h1>${messageBody}</h1>`,
     //         };
     //         console.log("cibai")
-    //         const result = await transport.sendResetMail(mailOptions);
+    //         const result = await transport.sendMail(mailOptions);
     //         console.log("cibai2")
             
 

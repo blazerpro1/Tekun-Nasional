@@ -22,7 +22,7 @@ module.exports = {
 
         if (!user) {
             return res.status(403).send({
-              error: 'Unable to retrieve loan.'
+              error: 'Unable to retrieve user.'
             })
         }
 
@@ -50,6 +50,7 @@ module.exports = {
         })
     },
 
+    //why do we need to add userId? Since only admin can access create loan db.
     create: async (req, res) => {
         const {
             userId,
@@ -62,7 +63,7 @@ module.exports = {
         } = loan;
         if (!name || !details || amount == undefined || (amount < 0.0) || userId == undefined) {
             return res.status(400).send({
-                error: ""
+                error: "Please enter a valid information."
             });
         }
 
@@ -73,7 +74,7 @@ module.exports = {
         });
         if (!user) {
             return res.status(400).send({
-                error: ""
+                error: "Unable to find user."
             });
         }
 

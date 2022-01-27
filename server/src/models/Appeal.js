@@ -7,10 +7,10 @@ module.exports = (sequelize, DataTypes) => {
         document:{
             type: DataTypes.STRING
         },
-        approval:{
-            type: DataTypes.BOOLEAN,
-            allowNull:false,
-            defaultValue: false,
+        approval: {
+            type: DataTypes.STRING(8),
+            allowNull: false,
+            defaultValue: "pending",
         },
     });
 
