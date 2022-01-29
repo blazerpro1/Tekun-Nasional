@@ -89,6 +89,10 @@ const routes = [
     path: '/resetPassword/:token',
     name: 'resetPassword',
     component: resetPassword,
+  },
+  {
+    path: '*',
+    redirect: '/'
   }
 ]
 

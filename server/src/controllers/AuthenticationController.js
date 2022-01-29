@@ -54,7 +54,7 @@ module.exports = {
 
         if (!user) {
           return res.status(403).send({
-            error: 'The login information was incorrectaa'
+            error: 'Please insert a registered email'
           })
         }
   

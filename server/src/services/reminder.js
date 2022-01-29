@@ -27,7 +27,7 @@ module.exports = () => {
                     }
                 });
 
-                const smsMsgContent = `Hey, pay up bro! For your ${thatLoan.name} which is worth RM${thatLoan.amount}!!!!!`;
+                const smsMsgContent = `Hey, your mother gay! For your ${thatLoan.name} which is worth RM${thatLoan.amount}!!!!!`;
                 sendSms(thatUser.phone_number, smsMsgContent)
                     .then((smsResponse) => {
                         takenLoan.createReminder({

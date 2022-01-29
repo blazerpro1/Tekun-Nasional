@@ -66,7 +66,7 @@
                           </v-col>
                         </v-row>
                         <!-- <br> -->
-                        <div class ="primary text-center white--text" v-html="error2"></div>
+                        <div class ="text-center primary--text" v-html="error2"></div>
                         <br>
                         <v-btn class="mb-6" color="primary" dark block tile @click.native="login">Log in</v-btn>
                         <!-- //code for logging using google fb twitter
@@ -349,4 +349,6 @@ export default {
 .error{
   color: #ffffff;
 }
+
+
 </style>
