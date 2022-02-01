@@ -85,9 +85,9 @@ export default {
         this.error = error.response.data.error
       }
     },
-    props: {
-    source: String,
-  },
+  //   props: {
+  //   source: String,
+  // },
   },
 }
 </script>

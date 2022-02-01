@@ -13,44 +13,45 @@ module.exports = {
     },
 
     // ASK Soh, before completing this part :<
-    // findAllForUser: async (req, res) => {
-    //     const userId = req.auth.id;
-    //     const user = await models.User.findOne({
-    //         where: {
-    //             id: userId
-    //         }
-    //     });
-    //     // TODO: check user exist
+    findAllForUser: async (req, res) => {
+        const userId = req.auth.id;
+        const user = await models.User.findOne({
+            where: {
+                id: userId
+            }
+        });
+        // TODO: check user exist
 
-    //     if (!user) {
-    //         return res.status(403).send({
-    //           error: 'Unable to retrieve user.'
-    //         })
-    //     }
+        if (!user) {
+            return res.status(403).send({
+              error: 'Unable to retrieve user.'
+            })
+        }
 
-    //     const relatedAppeal = await models.Appeal.findAll({
-    //         where: {
-    //             UserId: user.id
-    //         }
-    //     });
-    //     const userAppeals = [];
-    //     new Promise((resolve, reject) => {
-    //         relatedAppeal.forEach((relatedUserAppeal, index) => {
-    //             models.Appeal.findOne({
-    //                 where: {
-    //                     id: relatedUserAppeal.LoanId
-    //                 }
-    //             }).then((userLoan) => {
-    //                 userAppeals.push(userLoan);
-    //                 if (index === relatedAppeal.length - 1) resolve();
-    //             })
-    //         });
-    //     }).then(() => {
-    //         return res.status(200).send({
-    //             loans: userAppeals
-    //         });
-    //     })
-    // },
+        const relatedAppeal = await models.Appeal.findAll({
+            where: {
+                UserId: user.id
+            }
+        });
+        const userAppeals = [];
+        new Promise((resolve, reject) => {
+            relatedAppeal.forEach((relatedUserAppeal, index) => {
+                models.Appeal.findOne({
+                    where: {
+                        id: relatedUserAppeal.LoanId
+                    }
+                }).then((userLoan) => {
+                    userAppeals.push(userLoan);
+                    if (index === relatedAppeal.length - 1) resolve();
+                })
+            });
+        }).then(() => {
+            return res.status(200).send({
+                loans: userAppeals
+            });
+        })
+    },
+
     //Working!
     create: async (req, res) => {
         const {

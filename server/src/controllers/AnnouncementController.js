@@ -5,11 +5,13 @@ module.exports = {
     findAll: async (req, res) => {
         // const { offset, limit } = req.query;
         // const user = req.user;
-
-        const announcements = await models.Announcement.findAll({attributes: ['id', 'name', 'details']});
-        return res.send({
+        const announcements = await models.Announcement.findAll({limit: 5,
+        order: [
+            ['id', 'DESC']
+        ]});
+        return res.send(
             announcements
-        });
+        );
     },
 
     //working

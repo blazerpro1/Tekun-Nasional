@@ -25,13 +25,16 @@
           <v-card class="text-center ma-3">
             <v-responsive class="pt-4">
               <v-avatar size="100" class="grey lighten-2">
-                <!-- <img :src="loan.avatar1"> -->
-                <v-icon >mdi-account-circle</v-icon>
+                <img src="/logo_tekun.png" />
+                <!-- <v-icon >mdi-account-circle</v-icon> -->
               </v-avatar>
             </v-responsive>
             <v-card-text>
-              <div class="text-subtitle-1">{{ loan.name }}</div>
+              <div class="font-weight-medium text-subtitle-1 primary--text">{{ loan.name }}</div>
               <div class="grey--text">{{ loan.details }}</div>
+              <br>
+              <div class="grey--text">Loan amount: RM{{ loan.amount }}</div>
+
             </v-card-text>
             <v-card-actions>
               <v-row justify="center pb-3">
@@ -49,17 +52,12 @@
 </template>
 
 <script>
-import axios from 'axios'
+import LoanService from "@/services/LoanService.js";
+
 export default {
   data() {
     return {
-      loans: [
-        { name: "Loan 1", details: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!", avatar: '/avatar-6.png' },
-        { name: "Loan 2", details: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!", avatar: '/avatar-2.png' },
-        { name: "Loan 3", details: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!", avatar: '/avatar-3.png' },
-        { name: "Loan 4", details: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!", avatar: '/avatar-4.png' },
-        { name: "Loan 5", details: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!", avatar: '/avatar-5.png' },
-      ],
+      loans: null,
       snackbar: false
     };
   },
@@ -73,14 +71,8 @@ export default {
     },
   },
 
-  mounted(){
-        axios
-            .get('http://localhost:3000/api/loans')
-            .then(response => {
-                this.loans = response.data
-                // console.log(response.data)
-            })
-            .catch(error => console.log(error))
-    }
+  async mounted() {
+    this.loans = (await LoanService.index()).data;
+  },
 };
 </script>

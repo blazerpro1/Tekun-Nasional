@@ -8,11 +8,10 @@ export default {
         return Api().post('login', credentials)
     },
     forgot(credentials) {
-        return Api().post('forgotPassword', credentials) //SUBJECT TO CHANGE
+        return Api().post('forgotPassword', credentials) 
     },
     reset(credentials) {
         return Api().post(`resetPassword`, credentials,
-    ) //SUBJECT TO CHANGE
-    // `resetPassword/${credentials.token}`
+    ) 
 }
 }

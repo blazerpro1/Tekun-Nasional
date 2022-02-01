@@ -14,7 +14,7 @@
         <v-card-text>
           <v-form class="px-3" ref="form">
             <v-text-field
-              v-model="song.title"
+              v-model="announcement.name"
               :rules="[rules.required]"
               label="Announcement Title"
               outlined
@@ -22,11 +22,11 @@
               color="primary"
               autocomplete="false"
               class="mt-4"
-              prepend-icon="perm_identity"
+              prepend-icon="event"
             />
 
             <v-textarea
-              v-model="song.details"
+              v-model="announcement.details"
               :rules="[rules.required]"
               label="Announcement Details"
               outlined
@@ -34,7 +34,7 @@
               color="primary"
               autocomplete="false"
               class="mt-4"
-              prepend-icon="perm_identity"
+              prepend-icon="event_note"
             />
 
             <v-card-actions>
@@ -43,7 +43,6 @@
                 text
                 class="primary mx-0 mt-1"
                 @click="submit"
-                :loading="loading"
                 >Submit</v-btn
               >
             </v-card-actions>
@@ -58,8 +57,9 @@
 import AnnouncementService from "@/services/AnnouncementService.js";
 export default {
   data: () => ({
+    dialog: false,
     announcement: {
-      title: "",
+      name: "",
       details: "",
     },
     rules: {
@@ -71,10 +71,11 @@ export default {
       try {
         if (this.$refs.form.validate()) {
           await AnnouncementService.post(this.announcement);
-          this.$emit("projectAdded");
+          this.dialog = false;
+          this.$emit("projectAdded2");
         }
       } catch (err) {
-        console.log(err)
+        console.log(err.response);
       }
     },
     reset() {

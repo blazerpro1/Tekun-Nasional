@@ -13,15 +13,15 @@ const {
 
 
 module.exports = (app) => {
-    app.post('/register',
-        AuthenticationControllerPolicy.register,
-        AuthenticationController.register);
-
-    app.post('/login',
-        AuthenticationController.login);
+    // app.post('/register',
+    //     AuthenticationControllerPolicy.register,
+    //     AuthenticationController.register);
 
     app.get('/admin/loans',
         isAdminAuthenticated,
+        LoanController.findAll);
+
+    app.get('/loans',
         LoanController.findAll);
 
     app.post('/admin/loan',
@@ -40,13 +40,13 @@ module.exports = (app) => {
         // isAdminAuthenticated,
         LoanController.delete);
 
-    app.post('/forgotPassword', 
-        forgotPassword.sendResetLink);
+    // app.post('/forgotPassword', 
+    //     forgotPassword.sendResetLink);
 
-    app.post('/resetPassword', 
-        forgotPassword.resetPassword);
+    // app.post('/resetPassword', 
+    //     forgotPassword.resetPassword);
 
-    app.get('/admin/appeals',
+    app.get('/admin/appeal',
         AppealController.findAll);
 
     app.post('/user/appeal',
@@ -58,7 +58,7 @@ module.exports = (app) => {
     app.get('/admin/announcement',
         AnnouncementController.findAll);
 
-    app.get('/user/announcement',
+    app.get('/announcement',
         AnnouncementController.findAll);
 
     app.post('/admin/announcement',
@@ -71,7 +71,11 @@ module.exports = (app) => {
         AnnouncementController.update);
         
     app.put('/user/profile',
-        // AuthenticationControllerPolicy.updateProfile,
+        AuthenticationControllerPolicy.updateProfile,
         UserController.update);
+    
+    app.get('/user/profile',
+        isAuthenticated,
+        UserController.show);
     
 }

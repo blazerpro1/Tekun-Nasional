@@ -6,9 +6,7 @@ module.exports = {
         // const user = req.user;
 
         const loans = await models.Loan.findAll({});
-        return res.send({
-            loans
-        });
+        return res.send(loans);
     },
 
     findAllForUser: async (req, res) => {

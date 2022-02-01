@@ -132,6 +132,9 @@
 .project.pending {
   border-left: 4px solid #fed330;
 }
+.project.rejected {
+  border-left: 4px solid red;
+}
 
 
 .v-chip.pending {
@@ -139,6 +142,9 @@
 }
 .v-chip.approved {
   background: #26de81;
+}
+.v-chip.rejected {
+  background: red;
 }
 
 </style>

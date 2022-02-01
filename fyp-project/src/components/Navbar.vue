@@ -1,13 +1,18 @@
 <template>
   <nav class="grey lighten-4">
     <v-snackbar v-model="snackbar" :timeout="4000" top color="success">
-      <span>Awesome! You added a new project.</span>
+      <span>Awesome! You have edited your profile.</span>
       <v-btn text color="white" @click="snackbar = false"> Close </v-btn>
+    </v-snackbar>
+
+    <v-snackbar v-model="snackbar2" :timeout="4000" top color="success">
+      <span>Awesome! You have added a new announcement.</span>
+      <v-btn text color="white" @click="snackbar2 = false"> Close </v-btn>
     </v-snackbar>
 
     <!-- app = fix at the top -->
     <!-- TODO -->
-    <!-- <v-app-bar flat app v-if="$store.state.user.roles.indexOf('admin') > -1"> -->
+    <!-- <v-app-bar flat app v-if="$store.state.user.roles.indexOf('admin-user') > -1"> -->
     <v-app-bar flat app v-if="$store.state.isUserLoggedIn">
       <v-app-bar-nav-icon
         class="grey--text"
@@ -46,16 +51,19 @@
       </v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" app class="primary">
+    <v-navigation-drawer v-model="drawer" app class="primary" v-if="$store.state.isUserLoggedIn">
       <v-row justify="center" class="mt-5">
         <v-col cols="6">
           <v-avatar size="100">
             <img src="/logo_tekun.png" />
           </v-avatar>
-          <!-- <p class="white--text subheading mt-1">Koh Guan Po</p> -->
+          <p class="text-center white--text subheading mt-3 mb-0">{{name}}</p>
         </v-col>
-        <v-col class="mt-0 mb-3">
+        <v-col class="mt-0 mb-3" v-if="$store.state.user.roles.indexOf('admin-user') === -1">
           <Popup @projectAdded="snackbar = true" />
+        </v-col>
+        <v-col class="mt-0 mb-3" v-if="$store.state.user.roles.indexOf('admin-user') > -1">
+          <AnnouncementPopup @projectAdded2="snackbar2 = true" />
         </v-col>
       </v-row>
       <v-list>
@@ -81,10 +89,14 @@
 
 <script>
 import Popup from "../components/Popup";
+import AnnouncementPopup from "../components/AnnouncementPopup.vue";
+import UserService from "@/services/UserService.js";
+
 export default {
-  components: { Popup },
+  components: { Popup, AnnouncementPopup },
   data() {
     return {
+      name: "",
       drawer: false,
       links: [
         { icon: "home", text: "Main Menu", route: "/" },
@@ -94,6 +106,7 @@ export default {
         { icon: "pending_actions", text: "Appeal", route: "/appeal" },
       ],
       snackbar: false,
+      snackbar2: false,
     };
   },
 
@@ -105,6 +118,10 @@ export default {
         name: 'Login'
       })
     }
-  }
+  },
+
+  async mounted() {
+    this.name = (await UserService.index()).data.name;
+  },
 };
 </script>

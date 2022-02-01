@@ -9,7 +9,7 @@ const {
 const CLIENT_ID = process.env.EMAIL_CLIENT_ID;
 const CLEINT_SECRET = process.env.EMAIL_CLIENT_SECRET;
 const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
-const REFRESH_TOKEN = '1//04t6aRHOAqlEHCgYIARAAGAQSNwF-L9IrdognD2DkmcKbuOU5DzpefXogAOSJbq5FjLdV8iaNjew0G7TyqlcLMrjv6k7KQL6XuSc';
+const REFRESH_TOKEN = '1//04Azg5Nrek8BmCgYIARAAGAQSNwF-L9Iry5jRD-CtRQdP2nWK1maXQxjKeGAUlBMoGhK1Qy4o8CEURwxl1akcsv_58BeYBPqWaL4';
 
 const oAuth2Client = new google.auth.OAuth2(
     CLIENT_ID,

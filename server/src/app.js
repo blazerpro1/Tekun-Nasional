@@ -9,14 +9,29 @@ const config = require('./config/config')
 
 /* eslint-env node */
 app.use(cors())
-
 app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(express.json()) //=> req.body (diff from video part-2)
 
+const AuthenticationController = require('./controllers/AuthenticationController')
+app.post('/login', AuthenticationController.login);
+
+const AuthenticationControllerPolicy = require('./policies/AuthenticationControllerPolicy');
+app.post('/register',
+        AuthenticationControllerPolicy.register,
+        AuthenticationController.register);
+
+const forgotPassword = require("./controllers/forgotPassword");
+app.post('/forgotPassword', 
+forgotPassword.sendResetLink);
+
+app.post('/resetPassword', 
+forgotPassword.resetPassword);
+
+app.use(require("./middleware/auth").verify) //Line 1
 require('./routes')(app)
-require('./services/reminder')();
-app.use(require("./middleware/auth").verify);
+// app.use(require("./middleware/auth").verify) //Line 2
+require('./services/reminder')()
 
 
 

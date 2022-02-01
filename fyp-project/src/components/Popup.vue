@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center">
+  <div class="text-center" v-if="$store.state.isUserLoggedIn">
     <v-dialog v-model="dialog" width="500">
       <template v-slot:activator="{ on }">
         <v-btn class="success" dark v-on="on" @click="reset"
@@ -99,20 +99,19 @@
 </template>
 
 <script>
-import format from "date-fns/format";
-import parseISO from "date-fns/parseISO";
+import UserService from "@/services/UserService.js";
+
 export default {
   data: () => ({
     show1: false,
     show2: false,
     name: "",
-    email: "",
     icNumber: "",
     phoneNumber: "",
     password: "",
     passwordConfirm: "",
     // loading: false, TODO
-    // dialog: false, TODO
+    dialog: false,
     rules: {
       required: (value) => !!value || "Required.",
       min: (v) => v.length >= 8 || "Min 8 characters",
@@ -130,13 +129,20 @@ export default {
     },
   }),
   methods: {
-    submit() {
-      if (this.$refs.form.validate()) {
-        this.loading = true;
-        console.log(this.title, this.content);
-        this.loading = false;
-        this.dialog = false;
-        this.$emit("projectAdded");
+    async submit() {
+      try {
+        if (this.$refs.form.validate()) {
+          await UserService.update({
+            name: this.name,
+            ic_number: this.icNumber,
+            phone_number: this.phoneNumber,
+            password: this.password,
+          })
+          this.dialog = false;
+          this.$emit("projectAdded");
+        }
+      } catch (err) {
+        console.log(err.response);
       }
     },
     reset() {
@@ -144,9 +150,10 @@ export default {
     },
   },
   computed: {
-    formattedDate() {
-      return this.due ? format(parseISO(this.due), "do MMM yyyy") : "";
-    },
+    passwordConfirmationRule() {
+      return () =>
+        this.password === this.passwordConfirm || "Password must match";
+    }
   },
 };
 </script>
