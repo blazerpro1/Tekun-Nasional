@@ -2,7 +2,7 @@
   <div class="text-center" v-if="$store.state.isUserLoggedIn">
     <v-dialog v-model="dialog" width="500">
       <template v-slot:activator="{ on }">
-        <v-btn class="success" dark v-on="on" @click="reset"
+        <v-btn class="success" dark v-on="on" 
           >Edit Profile</v-btn
         >
       </template>
@@ -68,18 +68,6 @@
               autocomplete="false"
               prepend-icon="local_phone"
             />
-            <!-- <v-menu max-width="290">
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  :value="formattedDate"
-                  label="Birthday"
-                  prepend-icon="date_range"
-                  v-on="on"
-                  :rules="inputRules3"
-                ></v-text-field>
-              </template>
-              <v-date-picker v-model="due"></v-date-picker>
-            </v-menu> -->
 
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -145,10 +133,10 @@ export default {
         console.log(err.response);
       }
     },
-    reset() {
-      this.$refs.form.reset();
-    },
+
   },
+
+
   computed: {
     passwordConfirmationRule() {
       return () =>

@@ -3,16 +3,36 @@ const models = require("../models");
 module.exports = {
     //Working!
     findAll: async (req, res) => {
-        // const { offset, limit } = req.query;
-        // const user = req.user;
 
-        const appeals = await models.Appeal.findAll({});
-        return res.send({
-            appeals
+        const appeals = await models.Appeal.findAll({
+            
         });
+
+
+        const userAppeals = [];
+        new Promise((resolve, reject) => {
+            appeals.forEach((relatedUserAppeal, index) => {
+                models.Loan.findOne({
+                    where: {
+                        id: relatedUserAppeal.LoanId
+                    }
+                }).then((userLoan) => {
+                    userLoan.dataValues.approval = relatedUserAppeal.approval;
+                    userLoan.dataValues.appealId = relatedUserAppeal.id;
+                    userLoan.dataValues.createdAtNew = relatedUserAppeal.createdAt;
+                    userLoan.dataValues.appealDetails = relatedUserAppeal.details;
+                    userAppeals.push(userLoan);
+                    if (index === appeals.length - 1) resolve();
+                })
+            });
+        }).then(() => {
+            
+            return res.status(200).send(userAppeals
+            );
+        })
     },
 
-    // ASK Soh, before completing this part :<
+    
     findAllForUser: async (req, res) => {
         const userId = req.auth.id;
         const user = await models.User.findOne({
@@ -33,37 +53,37 @@ module.exports = {
                 UserId: user.id
             }
         });
+
         const userAppeals = [];
         new Promise((resolve, reject) => {
             relatedAppeal.forEach((relatedUserAppeal, index) => {
-                models.Appeal.findOne({
+                models.Loan.findOne({
                     where: {
                         id: relatedUserAppeal.LoanId
                     }
                 }).then((userLoan) => {
+                    userLoan.dataValues.approval = relatedUserAppeal.approval;
+                    userLoan.dataValues.createdAtNew = relatedUserAppeal.createdAt;
+                    userLoan.dataValues.appealDetails = relatedUserAppeal.details;
                     userAppeals.push(userLoan);
                     if (index === relatedAppeal.length - 1) resolve();
                 })
             });
         }).then(() => {
-            return res.status(200).send({
-                loans: userAppeals
-            });
+            
+            return res.status(200).send(userAppeals
+            );
         })
     },
 
     //Working!
     create: async (req, res) => {
-        const {
-            userId,
-            loanId,
-            appeal
-        } = req.body;
-        const {
-            details,
-            document
-        } = appeal;
-        if (!details || !document || userId == undefined || loanId == undefined) {
+        const userId = req.auth.id;
+        const loanId = req.params.loanId;
+        const details = req.body;
+
+
+        if (!details || userId == undefined || loanId == undefined) {
             return res.status(400).send({
                 error: "Please enter a valid information."
             });
@@ -91,24 +111,56 @@ module.exports = {
             });
         }
 
-        const createdAppeal = await models.Appeal.create({
-            details,
-            document
-        });
+        const userAppeal = await models.Appeal.findOne({
+            where: {
+                UserId: userId,
+                LoanId: loanId
+            }
+        })
+
+        if (userAppeal === undefined || userAppeal === null) {
+
+            const createdAppeal = await models.Appeal.create(
+                details
+            );
+    
+            const createJoins = await user.addAppeal(createdAppeal);
+            const createJoins2 = await loan.addAppeal(createdAppeal);
+            return res.status(201).send({
+                appeal: createdAppeal
+            });
+        } else {
+            return res.status(400).send({
+                error: "You cannot appeal the same loan."
+            });
+        }
 
 
-        const createJoins = await user.addAppeal(createdAppeal);
-        const createJoins2 = await loan.addAppeal(createdAppeal);
-        return res.status(201).send({
-            appeal: createdAppeal
-        });
+        // if (userAppeal !== undefined || userAppeal.length != 0) {
+        //     return res.status(400).send({
+        //         error: "You cannot appeal the same loan."
+        //     });
+        // }
+
+        // const createdAppeal = await models.Appeal.create(
+        //     details
+        // );
+
+
+        // const createJoins = await user.addAppeal(createdAppeal);
+        // const createJoins2 = await loan.addAppeal(createdAppeal);
+        // return res.status(201).send({
+        //     appeal: createdAppeal
+        // });
     },
 
 
     //Working!
     //TODO: ALLOW ADMIN TO UPDATE THE APPROVAL TO (REJECTED,APPROVED,PENDING)
     update: async (req, res) => {
-        const {id, approval} = req.body.appeal;
+        const {id, approval} = req.body.data;
+
+
 
         // validation
         if (!id || !approval) 

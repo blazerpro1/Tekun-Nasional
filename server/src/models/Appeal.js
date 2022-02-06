@@ -4,9 +4,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
             allowNull:false
         },
-        document:{
-            type: DataTypes.STRING
-        },
         approval: {
             type: DataTypes.STRING(8),
             allowNull: false,

@@ -2,12 +2,17 @@
   <nav class="grey lighten-4">
     <v-snackbar v-model="snackbar" :timeout="4000" top color="success">
       <span>Awesome! You have edited your profile.</span>
-      <v-btn text color="white" @click="snackbar = false"> Close </v-btn>
+      <v-btn text color="white" @click="snackbarClose"> Close </v-btn>
     </v-snackbar>
 
     <v-snackbar v-model="snackbar2" :timeout="4000" top color="success">
       <span>Awesome! You have added a new announcement.</span>
-      <v-btn text color="white" @click="snackbar2 = false"> Close </v-btn>
+      <v-btn text color="white" @click="snackbarClose"> Close </v-btn>
+    </v-snackbar>
+
+    <v-snackbar v-model="snackbar3" :timeout="4000" top color="success">
+      <span>Awesome! You have added a new loan.</span>
+      <v-btn text color="white" @click="snackbar3 = false"> Close </v-btn>
     </v-snackbar>
 
     <!-- app = fix at the top -->
@@ -25,7 +30,7 @@
       <v-spacer></v-spacer>
 
       <!-- dropdown menu -->
-      <v-menu offset-y v-if="$store.state.isUserLoggedIn">
+      <v-menu offset-y v-if="$store.state.user.roles.indexOf('admin-user') === -1">
         <template v-slot:activator="{ on }">
           <v-btn text v-on="on" color="grey">
             <v-icon left>mdi-chevron-down</v-icon>
@@ -35,6 +40,25 @@
         <v-list>
           <v-list-item
             v-for="link in links"
+            :key="link.text"
+            router
+            :to="link.route"
+          >
+            <v-list-item-title>{{ link.text }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+
+      <v-menu offset-y v-if="$store.state.user.roles.indexOf('admin-user') > -1">
+        <template v-slot:activator="{ on }">
+          <v-btn text v-on="on" color="grey">
+            <v-icon left>mdi-chevron-down</v-icon>
+            <span>Menu</span>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="link in linksAdmin"
             :key="link.text"
             router
             :to="link.route"
@@ -65,10 +89,32 @@
         <v-col class="mt-0 mb-3" v-if="$store.state.user.roles.indexOf('admin-user') > -1">
           <AnnouncementPopup @projectAdded2="snackbar2 = true" />
         </v-col>
+        
       </v-row>
-      <v-list>
+      <v-col class="mt-0 mb-3" v-if="$store.state.user.roles.indexOf('admin-user') > -1">
+          <LoanPopup @projectAdded3="snackbar3 = true" />
+        </v-col>
+      <v-list v-if="$store.state.user.roles.indexOf('admin-user') === -1">
         <v-list-item
           v-for="link in links"
+          :key="link.text"
+          router
+          :to="link.route"
+        >
+          <v-list-item-action>
+            <v-icon class="white--text">{{ link.icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title class="white--text">{{
+              link.text
+            }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
+      <v-list v-if="$store.state.user.roles.indexOf('admin-user') > -1">
+        <v-list-item
+          v-for="link in linksAdmin"
           :key="link.text"
           router
           :to="link.route"
@@ -90,10 +136,11 @@
 <script>
 import Popup from "../components/Popup";
 import AnnouncementPopup from "../components/AnnouncementPopup.vue";
+import LoanPopup from "../components/LoanPopup.vue";
 import UserService from "@/services/UserService.js";
 
 export default {
-  components: { Popup, AnnouncementPopup },
+  components: { Popup, AnnouncementPopup, LoanPopup },
   data() {
     return {
       name: "",
@@ -103,10 +150,17 @@ export default {
         { icon: "circle_notifications",text: "Notification List",route: "/notification",},
         { icon: "done", text: "Apply Loans", route: "/application" },
         { icon: "attach_money", text: "Check Loans", route: "/loans" },
-        { icon: "pending_actions", text: "Appeal", route: "/appeal" },
+        { icon: "pending_actions", text: "Check Appeal", route: "/appeals" },
+      ],
+      linksAdmin: [
+        { icon: "home", text: "Main Menu", route: "/" },
+        { icon: "done", text: "Loans", route: "/application" },
+        { icon: "attach_money", text: "Check User Loans", route: "/admin/loans" },
+        { icon: "pending_actions", text: "Check User Appeals", route: "/admin/appeals" },
       ],
       snackbar: false,
       snackbar2: false,
+      snackbar3: false,
     };
   },
 
@@ -117,6 +171,12 @@ export default {
       this.$router.push({
         name: 'Login'
       })
+    },
+    snackbarClose(){
+      this.snackbar2 = false;
+      this.snackbar2 = false;
+      this.snackbar2 = false;
+      window.location.reload();
     }
   },
 

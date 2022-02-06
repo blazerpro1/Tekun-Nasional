@@ -4,35 +4,59 @@
     
     <h1 class ="subtitle-1 grey--text">Notification List</h1>
 
-    <v-container class="my-5">
+    <v-container style="max-width: 1000px; position: relative;" class="my-8">
       <v-expansion-panels>
-        <v-expansion-panel v-for="notification in notifications" :key="notification.title">
-          <v-expansion-panel-header>{{ notification.title }}</v-expansion-panel-header>
+        <!-- v-for="(notification, index) in announcements" -->
+        <v-expansion-panel v-for="(notification, index) in notifications" :key="notification.id">
+          <v-expansion-panel-header>Notification {{index + 1}}</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-card flat>
               <v-card-text class="px-4 py-0 grey--text">
-                <div class="font-weight-bold">Date by {{ notification.date }}</div>
-                <div>{{ notification.content }}</div>
+                <div class="font-weight-bold">{{ notification.createdAt }}</div>
+                <!-- <div class="font-weight-bold">{{ moment(notification.createdAtFormatted).fromNow() }}</div> -->
+                <div>{{ notification.message }}</div>
               </v-card-text>
             </v-card>
           </v-expansion-panel-content>
         </v-expansion-panel>        
       </v-expansion-panels>
     </v-container>
+
+
   </div>
 </template>
 
 <script>
+// import date from 'date-and-time';
+// import moment from 'moment';
+import NotificationService from '@/services/NotificationService.js';
 export default {
     data(){
       return{
-        notifications: [
-        { title: 'Notification 1', date: '1st Jan 2019', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!'},
-        { title: 'Notification 2', date: '10th Jan 2019', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!'},
-        { title: 'Notification 3', date: '20th Dec 2018', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!'},
-        { title: 'Notification 4', date: '20th Oct 2018', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!'},
-      ]
+        // moment:moment,
+        notifications: null,
       }
     },
+
+    async mounted() {
+    this.notifications = (await NotificationService.index()).data;
+    // console.log(this.notifications.length);
+  },
+
+  // async mounted() {
+  //   this.notifications = (await NotificationService.index()).data[0].map((a) => {
+  //     return {
+  //       createdAtFormatted: moment(date.format(date.parse(a.createdAt, "YYYY-MM-DD[T]HH:mm:ss.SSS [Z]"), 'YYYY-MM-DD hh:mm:ss A ')).add(8, 'hours'),
+  //       ...a,
+  //     }
+  //   });
+  // },
   }
 </script>
+
+<style scoped>
+.main-container {
+  position: relative !important;
+  max-width: 1000px !important;
+}
+</style>

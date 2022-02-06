@@ -5,7 +5,7 @@ module.exports = {
     findAll: async (req, res) => {
         // const { offset, limit } = req.query;
         // const user = req.user;
-        const announcements = await models.Announcement.findAll({limit: 5,
+        const announcements = await models.Announcement.findAll({limit: 10,
         order: [
             ['id', 'DESC']
         ]});
@@ -37,7 +37,7 @@ module.exports = {
 
     //working
     delete: async (req, res) => {
-        const { id } = req.body.announcement;
+        const { id } = req.body;
 
         if (!id) 
             return res.status(400).send({error: "Error in selecting announcement."});

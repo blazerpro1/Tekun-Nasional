@@ -5,8 +5,6 @@ const { sendMail } = require("./email");
 
 module.exports = () => {
 
-
-
     const checkAndSendReminder = async () => {
         const takenLoans = await models.User_Loans.findAll();
         takenLoans.forEach(async (takenLoan) => {
@@ -27,7 +25,7 @@ module.exports = () => {
                     }
                 });
 
-                const smsMsgContent = `Hey, your mother gay! For your ${thatLoan.name} which is worth RM${thatLoan.amount}!!!!!`;
+                const smsMsgContent = `Please pay up your ${thatLoan.name} which is worth RM${thatLoan.amount}! \nThank you.`;
                 sendSms(thatUser.phone_number, smsMsgContent)
                     .then((smsResponse) => {
                         takenLoan.createReminder({
@@ -49,7 +47,7 @@ module.exports = () => {
 
             if (reminders.length === 0 &&
                 (new Date().getTime() - new Date(takenLoan.updatedAt).getTime() > (30 * 86400 * 1000)) &&
-                takenLoan.approval === "pending") blastSms();
+                takenLoan.approval === "approved") blastSms();
             else if (
                 reminders.length > 0 &&
                 new Date().getTime() -

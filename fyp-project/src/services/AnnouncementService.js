@@ -7,7 +7,7 @@ export default {
     post(announcement) {
         return Api().post('/admin/announcement', announcement)
     },
-    delete(){
-        return Api().delete('/admin/announcement')
+    delete(credentials){
+        return Api().delete('/admin/announcement', {data: credentials})
     },
 }

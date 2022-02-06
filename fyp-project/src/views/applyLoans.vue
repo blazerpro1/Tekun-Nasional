@@ -6,10 +6,20 @@
     />
 
     <h1 class="subtitle-1 grey--text">Loan Application</h1>
-    
+
     <v-snackbar v-model="snackbar" :timeout="4000" top color="success">
       <span>Awesome! You successfully applied a loan!.</span>
-      <v-btn text color="white" @click ="snackbar = false"> Close </v-btn>
+      <v-btn text color="white" @click="snackbar = false"> Close </v-btn>
+    </v-snackbar>
+
+    <v-snackbar v-model="snackbar2" :timeout="4000" top color="red">
+      <span>You cannot apply the same loan.</span>
+      <v-btn text color="white" @click="snackbar2 = false"> Close </v-btn>
+    </v-snackbar>
+
+    <v-snackbar v-model="snackbar3" :timeout="4000" top color="success">
+      <span>You successfully deleted a loan.</span>
+      <v-btn text color="white" @click="snackbar3 = false"> Close </v-btn>
     </v-snackbar>
 
     <v-container class="my-5">
@@ -29,19 +39,35 @@
                 <!-- <v-icon >mdi-account-circle</v-icon> -->
               </v-avatar>
             </v-responsive>
-            <v-card-text>
-              <div class="font-weight-medium text-subtitle-1 primary--text">{{ loan.name }}</div>
+            <v-card-text style="overflow-y: auto; height:240px">
+              <div class="font-weight-medium text-subtitle-1 primary--text">
+                {{ loan.name }}
+              </div>
               <div class="grey--text">{{ loan.details }}</div>
-              <br>
+              <br />
               <div class="grey--text">Loan amount: RM{{ loan.amount }}</div>
-
             </v-card-text>
             <v-card-actions>
-              <v-row justify="center pb-3">
-                  <v-btn text @click="submit" class="grey--text">
-                    <v-icon small left>add_circle_outline</v-icon>
-                    <span>Apply</span>
-                  </v-btn>
+              <v-row align="center" justify="space-around mb-2">
+                <v-btn
+                  v-if="$store.state.user.roles.indexOf('admin-user') === -1"
+                  text
+                  @click.native="submit(loan.id)"
+                  class="grey--text"
+                >
+                  <v-icon small left>add_circle_outline</v-icon>
+                  <span>Apply</span>
+                </v-btn>
+                <v-btn
+                  v-if="$store.state.user.roles.indexOf('admin-user') > -1"
+                  text
+                  @click.native="remove(loan.id)"
+                  color="error"
+                  class="grey--text"
+                >
+                  <v-icon small left>cancel</v-icon>
+                  <span>Delete</span>
+                </v-btn>
               </v-row>
             </v-card-actions>
           </v-card>
@@ -58,21 +84,46 @@ export default {
   data() {
     return {
       loans: null,
-      snackbar: false
+      snackbar: false,
+      snackbar2: false,
+      snackbar3: false,
     };
   },
 
   methods: {
-    submit() {
-      this.snackbar = true;
+    async submit(loanId) {
+      try {
+        //might be {{id}}
+        await LoanService.post({ loanId });
+        this.snackbar = true;
+      } catch (err) {
+        this.snackbar2 = true;
+        console.log(err.response);
+      }
     },
-    reset() {
-      this.$refs.form.reset();
+
+    async remove(loanId) {
+      try {
+        LoanService.delete({
+          loanId
+        }).then(async () => {
+          this.loans = (await LoanService.index()).data;
+          this.snackbar3 = true;
+        })
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 
-  async mounted() {
+  async created() {
     this.loans = (await LoanService.index()).data;
   },
 };
 </script>
+
+<style scoped>
+.error {
+  color: #ffffff;
+}
+</style>

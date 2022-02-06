@@ -4,11 +4,14 @@ import Mainmenu from '../views/Home.vue'
 import Notification from '../views/notificationList'
 import Application from '../views/applyLoans'
 import Loans from '../views/checkLoans'
-import Appeal from '../views/Appeal'
 import Login from '../views/Login'
 import Register from '../views/signUp'
 import ForgotPassword from '../views/forgotPassword'
 import resetPassword from '../views/resetPassword'
+import AppealPage from '../views/AppealPage'
+import checkAppeals from '../views/checkAppeals'
+import checkUserAppeals from '../views/checkUserAppeals'
+import checkUserLoans from '../views/checkUserLoans'
 import test from '../views/testing'
 import store from '@/store/store'
 
@@ -52,9 +55,27 @@ const routes = [
 
   },
   {
-    path: '/appeal',
+    path: '/admin/loans',
+    name: 'admin loans',
+    component: checkUserLoans,
+    meta: {
+      requiresAuth: true
+    }
+
+  },
+  {
+    path: '/appeals',
     name: 'loan appeal',
-    component: Appeal,
+    component: checkAppeals,
+    meta: {
+      requiresAuth: true
+    }
+
+  },
+  {
+    path: '/admin/appeals',
+    name: 'admin appeal',
+    component: checkUserAppeals,
     meta: {
       requiresAuth: true
     }
@@ -89,6 +110,14 @@ const routes = [
     path: '/resetPassword/:token',
     name: 'resetPassword',
     component: resetPassword,
+  },
+  {
+    path: '/appeal/:id',
+    name: 'appealPage',
+    component: AppealPage,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '*',
