@@ -12,8 +12,8 @@
           <v-expansion-panel-content>
             <v-card flat>
               <v-card-text class="px-4 py-0 grey--text">
-                <div class="font-weight-bold">{{ notification.createdAt }}</div>
-                <!-- <div class="font-weight-bold">{{ moment(notification.createdAtFormatted).fromNow() }}</div> -->
+                <!-- <div class="font-weight-bold">{{ notification.createdAt }}</div> -->
+                <div class="font-weight-bold">{{ moment(notification.createdAtFormatted).fromNow() }}</div>
                 <div>{{ notification.message }}</div>
               </v-card-text>
             </v-card>
@@ -27,30 +27,25 @@
 </template>
 
 <script>
-// import date from 'date-and-time';
-// import moment from 'moment';
+import date from 'date-and-time';
+import moment from 'moment';
 import NotificationService from '@/services/NotificationService.js';
 export default {
     data(){
       return{
-        // moment:moment,
+        moment:moment,
         notifications: null,
       }
     },
 
-    async mounted() {
-    this.notifications = (await NotificationService.index()).data;
-    // console.log(this.notifications.length);
+  async mounted() {
+    this.notifications = (await NotificationService.index()).data.map((a) => {
+      return {
+        createdAtFormatted: moment(date.format(date.parse(a.createdAt, "YYYY-MM-DD[T]HH:mm:ss.SSS [Z]"), 'YYYY-MM-DD hh:mm:ss A ')).add(8, 'hours'),
+        ...a,
+      }
+    });
   },
-
-  // async mounted() {
-  //   this.notifications = (await NotificationService.index()).data[0].map((a) => {
-  //     return {
-  //       createdAtFormatted: moment(date.format(date.parse(a.createdAt, "YYYY-MM-DD[T]HH:mm:ss.SSS [Z]"), 'YYYY-MM-DD hh:mm:ss A ')).add(8, 'hours'),
-  //       ...a,
-  //     }
-  //   });
-  // },
   }
 </script>
 

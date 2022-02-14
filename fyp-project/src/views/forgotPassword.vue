@@ -76,18 +76,12 @@ export default {
         await AuthenticationService.forgot({
           email: this.email,
         })
-        // this.error = "Check your email for the reset password link"
-        // this.$store.dispatch('setToken', response.data.token) // SUBJECT TO CHANGE
-        // this.$store.dispatch('setUser', response.data.user) // SUBJECT TO CHANGE
-        // this.$router.push('/')
         alert("Check your email for the reset password link!")
       } catch (error) {
         this.error = error.response.data.error
       }
     },
-  //   props: {
-  //   source: String,
-  // },
+
   },
 }
 </script>

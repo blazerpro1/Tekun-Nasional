@@ -1,8 +1,6 @@
-// const AuthenticationController = require('./controllers/AuthenticationController')
 const AuthenticationControllerPolicy = require('./policies/AuthenticationControllerPolicy');
 const LoanController = require("./controllers/LoanController");
 const AppealController = require("./controllers/AppealController");
-// const forgotPassword = require("./controllers/forgotPassword");
 const AnnouncementController = require('./controllers/AnnouncementController');
 const UserController = require('./controllers/UserController');
 
@@ -14,10 +12,8 @@ const NotificationController = require('./controllers/NotificationController');
 
 
 module.exports = (app) => {
-    // app.post('/register',
-    //     AuthenticationControllerPolicy.register,
-    //     AuthenticationController.register);
 
+    //Loans
     app.get('/admin/loans',
         LoanController.findAllUserLoans);
 
@@ -55,12 +51,8 @@ module.exports = (app) => {
         // isAdminAuthenticated,
         LoanController.delete);
 
-    // app.post('/forgotPassword', 
-    //     forgotPassword.sendResetLink);
 
-    // app.post('/resetPassword', 
-    //     forgotPassword.resetPassword);
-
+    //Appeal Loans
     app.get('/admin/appeal',
         AppealController.findAll);
         
@@ -75,6 +67,7 @@ module.exports = (app) => {
     app.put('/admin/appeal',
         AppealController.update);
 
+    //Announcement 
     app.get('/admin/announcement',
         AnnouncementController.findAll);
 
@@ -89,7 +82,8 @@ module.exports = (app) => {
 
     app.put('/admin/announcement',
         AnnouncementController.update);
-        
+
+    //Profile        
     app.put('/user/profile',
         AuthenticationControllerPolicy.updateProfile,
         UserController.update);
@@ -98,6 +92,7 @@ module.exports = (app) => {
         isAuthenticated,
         UserController.show);
 
+    //Notification
     app.get('/user/notification',
         NotificationController.findAllForUser);
     

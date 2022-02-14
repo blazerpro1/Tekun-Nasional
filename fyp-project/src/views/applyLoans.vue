@@ -93,7 +93,6 @@ export default {
   methods: {
     async submit(loanId) {
       try {
-        //might be {{id}}
         await LoanService.post({ loanId });
         this.snackbar = true;
       } catch (err) {

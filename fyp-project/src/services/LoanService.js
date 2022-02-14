@@ -22,11 +22,9 @@ export default {
     delete(loan){
         return Api().delete('/admin/loan', {data: loan})
     },
-    //TODO
     showAll() {
         return Api().get('/admin/loans')
     },
-    //TODO
     update(credentials){
         return Api().put('/admin/loan', {data: credentials})
     },

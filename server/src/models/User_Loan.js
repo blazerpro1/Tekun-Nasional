@@ -12,20 +12,6 @@ module.exports = (sequelize, DataTypes) => {
         },
     });
 
-    // User_Loan.associate = function (models){
-    //     User_Loan.belongsTo(models.User, {
-    //         foreignKey: {
-    //             allowNull: false
-    //         }
-    //     })
-
-    //     User_Loan.belongsTo(models.Loan,{
-    //         foreignKey: {
-    //             allowNull: false
-    //         }
-    //     })
-    // }
-
     User_Loan.associate = function(models){
         User_Loan.hasMany(models.Reminders, {
             onDelete: "cascade"

@@ -104,20 +104,13 @@ import LoanService from "@/services/LoanService.js";
     }
   },
 
-  // async mounted() {
-  //   this.loans = (await LoanService.userLoan()).data;
-  // },
-
   async mounted() {
     this.userLoans = (await LoanService.show()).data;
-    // console.log(this.userLoans[0].approval);
     
     this.loans = (await LoanService.userLoan()).data.map((a) => {
       return {
         
         createdAtFormatted: moment(date.format(date.parse(a.createdAtNew, "YYYY-MM-DD[T]HH:mm:ss.SSS [Z]"), 'YYYY-MM-DD hh:mm:ss A ')).add(8, 'hours'),
-        // approval: this.userLoans.approval,
-        // status: "approved",
         ...a,
       }
     });

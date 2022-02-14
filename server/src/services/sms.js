@@ -14,7 +14,5 @@ module.exports = {
         messagingServiceSid: messageSID,
       })
     return response;
-    // .then(message => console.log(message.sid))
-    // .done();
   }
 }

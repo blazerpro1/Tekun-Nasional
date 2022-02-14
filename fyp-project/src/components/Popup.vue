@@ -98,7 +98,6 @@ export default {
     phoneNumber: "",
     password: "",
     passwordConfirm: "",
-    // loading: false, TODO
     dialog: false,
     rules: {
       required: (value) => !!value || "Required.",

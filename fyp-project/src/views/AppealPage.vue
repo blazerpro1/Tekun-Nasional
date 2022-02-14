@@ -105,7 +105,8 @@ export default {
     },
     snackbarClose() {
       this.snackbar = false;
-      this.$router.push('/');
+      this.$router.push('/appeals');
+      window.location.reload();
     },
     
   },

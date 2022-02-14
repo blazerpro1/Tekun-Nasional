@@ -5,14 +5,12 @@ import Notification from '../views/notificationList'
 import Application from '../views/applyLoans'
 import Loans from '../views/checkLoans'
 import Login from '../views/Login'
-import Register from '../views/signUp'
 import ForgotPassword from '../views/forgotPassword'
 import resetPassword from '../views/resetPassword'
 import AppealPage from '../views/AppealPage'
 import checkAppeals from '../views/checkAppeals'
 import checkUserAppeals from '../views/checkUserAppeals'
 import checkUserLoans from '../views/checkUserLoans'
-import test from '../views/testing'
 import store from '@/store/store'
 
 
@@ -85,14 +83,6 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login,
-    // meta: { hideNavigation: true }
-
-  },
-  {
-    path: '/register',
-    name: 'Register',
-    component: Register,
-    // meta: { hideNavigation: true } "this.$store.dispatch('setToken', null)" written in App.vue beside navbar
 
   },
   {
@@ -100,11 +90,6 @@ const routes = [
     name: 'ForgotPassword',
     component: ForgotPassword,
 
-  },
-  {
-    path: '/test',
-    name: 'test',
-    component: test,
   },
   {
     path: '/resetPassword/:token',

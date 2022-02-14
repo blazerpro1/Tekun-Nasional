@@ -55,6 +55,7 @@
                           autocomplete="false"
                           @click:append="show1 = !show1"
                         />
+                        <div class ="text-center primary--text" v-html="error"></div>
                         <v-btn color="primary" dark block tile @click.native="reset">Reset</v-btn>
                       </v-col>
                     </v-row>
@@ -92,12 +93,7 @@ export default {
           password2: this.passwordConfirm,
           token: window.location.pathname.split('/')[2],
         })
-        // this.error = "Check your email for the reset password link"
-        // this.$store.dispatch('setToken', response.data.token) // SUBJECT TO CHANGE
-        // this.$store.dispatch('setUser', response.data.user) // SUBJECT TO CHANGE
-        
         alert("Successfully changed your password!")
-        // this.$router.push('/')
       } catch (error) {
         this.error = error.response.data.error
       }

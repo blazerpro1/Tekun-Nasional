@@ -86,11 +86,8 @@ export default {
     },
   },
 
-  // async mounted() {
-  //   this.appeals = (await AppealService.show()).data;
-  // },
 
-  async mounted() {
+  async created() {
     this.appeals = (await AppealService.show()).data.map((a) => {
       return {
 

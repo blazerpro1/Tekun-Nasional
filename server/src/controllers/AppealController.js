@@ -135,23 +135,6 @@ module.exports = {
             });
         }
 
-
-        // if (userAppeal !== undefined || userAppeal.length != 0) {
-        //     return res.status(400).send({
-        //         error: "You cannot appeal the same loan."
-        //     });
-        // }
-
-        // const createdAppeal = await models.Appeal.create(
-        //     details
-        // );
-
-
-        // const createJoins = await user.addAppeal(createdAppeal);
-        // const createJoins2 = await loan.addAppeal(createdAppeal);
-        // return res.status(201).send({
-        //     appeal: createdAppeal
-        // });
     },
 
 

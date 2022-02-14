@@ -65,25 +65,9 @@
                             </v-btn>
                           </v-col>
                         </v-row>
-                        <!-- <br> -->
                         <div class ="text-center primary--text" v-html="error2"></div>
                         <br>
                         <v-btn class="mb-6" color="primary" dark block tile @click.native="login">Log in</v-btn>
-                        <!-- //code for logging using google fb twitter
-                         <h5
-                          class="text-center  grey--text mt-4 mb-3"
-                        >Or Log in using</h5>
-                         <div class="d-flex  justify-space-between align-center mx-10 mb-16">
-                        <v-btn depressed outlined color="grey">
-                          <v-icon color="red">fab fa-google</v-icon>
-                        </v-btn>
-                        <v-btn depressed outlined color="grey">
-                          <v-icon color="blue">fab fa-facebook-f</v-icon>
-                        </v-btn>
-                        <v-btn depressed outlined color="grey">
-                          <v-icon color="light-blue lighten-3">fab fa-twitter</v-icon>
-                        </v-btn>
-                         </div> -->
                       </v-col>
                     </v-row>
                   </v-card-text>
@@ -195,49 +179,9 @@
                           autocomplete="false"
                           append-icon = "local_phone"
                         />
-                        <!-- <v-text-field
-                          v-model="password"
-                          :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                          :rules="[rules.required, rules.min]"
-                          :type="show1 ? 'text' : 'password'"
-                          name="input-10-1"
-                          label="Normal with hint text"
-                          hint="At least 8 characters"
-                          counter
-                          @click:append="show1 = !show1"
-                        ></v-text-field> -->
-                        <!-- <v-row>
-                              <v-col cols="12" sm="7">
-                                <v-checkbox
-                       
-                        label="I Accept AAE"
-                        class="mt-n1"
-                        color="blue"
-                      > </v-checkbox>
-                              </v-col>
-                              <v-col cols="12" sm="5">
-                                <span class="caption primary--text ml-n4">Terms &Conditions</span>
-                              </v-col>
-                            </v-row> -->
-                        <!-- <br> -->
                         <div class ="text-center primary--text" v-html="error"></div>
                         <br>
                         <v-btn class="mb-6" color="primary" dark block tile @click.native="register" >Sign up</v-btn>
-
-                        <!-- <h5
-                          class="text-center  grey--text mt-4 mb-3"
-                        >Or Sign up using</h5>
-                         <div class="d-flex  justify-space-between align-center mx-10 mb-11">
-                        <v-btn depressed outlined color="grey">
-                          <v-icon color="red">fab fa-google</v-icon>
-                        </v-btn>
-                        <v-btn depressed outlined color="grey">
-                          <v-icon color="blue">fab fa-facebook-f</v-icon>
-                        </v-btn>
-                        <v-btn depressed outlined color="grey">
-                          <v-icon color="light-blue lighten-3">fab fa-twitter</v-icon>
-                        </v-btn>
-                         </div> -->
                       </v-col>
                     </v-row>
                   </v-card-text>
@@ -318,6 +262,7 @@ export default {
         this.$store.dispatch('setToken', response.data.token)
         this.$store.dispatch('setUser', response.data.user)
         this.$router.push('/')
+        window.location.reload();
       } catch (error) {
         this.error2 = error.response.data.error
       }

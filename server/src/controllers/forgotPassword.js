@@ -1,11 +1,8 @@
 const jwt = require('jsonwebtoken');
 const validator = require('validator');
-const {User} = require('../models')
-// const {jwtSecret} = require('../config/config').authentication;
-const config = require('../config/config')
-const { sendResetMail } = require("../services/email");
+const {User} = require('../models');
+const config = require('../config/config');
 const { sendMail } = require("../services/email");
-// const { hashPassword, comparePassword } = require('./AuthenticationController');
 
 
 function jwtResetPassword (user) {
@@ -35,19 +32,13 @@ module.exports = {
 
             const link = `${req.protocol}://localhost:8080/resetPassword/${token}`;
             const MsgContent = `Here is your reset password link: ${link}`;
-    
-            // sendResetMail(email, MsgContent)
-            //     .then(() => {
-            //     }).catch((emailErr) => {
-            //         console.error(emailErr);
-            //         // TODO
-            //     });
+  
 
             sendMail(email, MsgContent)
                 .then(() => {
                 }).catch((emailErr) => {
                     console.error(emailErr);
-                    // TODO
+                    return res.status(400).send({ emailErr: 'The email provided is invalid' });
                 });
         
             return res.status(200).send({ message: 'Password reset link has been successfully sent to your inbox' });
@@ -60,6 +51,10 @@ module.exports = {
     resetPassword: async (req, res, next) => {
           try {
             const { password, password2, token } = req.body;
+
+            if(!password || !password2){
+              return res.status(400).send({ error: 'Please insert a password.' });
+            }
             const decoded = jwt.verify(token, config.authentication.jwtSecret);
             const id = decoded.id;
             // const hash = hashPassword(password);

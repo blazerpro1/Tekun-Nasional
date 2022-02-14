@@ -66,7 +66,6 @@ module.exports = {
                 id: userId
             }
         });
-        // TODO: check user exist
 
         if (!user) {
             return res.status(403).send({
@@ -96,7 +95,6 @@ module.exports = {
                 id: userId
             }
         });
-        // TODO: check user exist
 
         if (!user) {
             return res.status(403).send({
@@ -130,40 +128,6 @@ module.exports = {
             );
         })
     },
-
-    //TESTING1
-    // const userLoans = [];
-    // const userDetails = [];
-    //     new Promise((resolve, reject) => {
-    //         relatedUserLoans.forEach((relatedUserLoanRow, index) => {
-    //             models.Loan.findOne({
-    //                 where: {
-    //                     id: relatedUserLoanRow.LoanId
-    //                 },
-
-    //             }).then((userLoan) => {
-    //                 userLoans.push(userLoan);
-
-    //             }),
-    //             models.User_Loans.findOne({
-    //                 where: {
-    //                     id: relatedUserLoanRow.id
-    //                 },
-
-    //             }).then((asd) => {
-    //                 userDetails.push(asd);
-    //                 if (index === relatedUserLoans.length - 1) resolve();
-    //             })
-    //         });
-    //     }).then(() => {
-    //         return res.status(200).send({
-    //             loans: userLoans,
-    //             loansDetails: userDetails
-    //         } 
-    //         );
-    //     })
-    // },
-
 
     //create loans //Working
     create: async (req, res) => {
@@ -255,9 +219,6 @@ module.exports = {
             loanId
         } = req.body;
 
-        console.log("==============");
-        console.log(req.body);
-        console.log("==============");
 
         if (!loanId)
             return res.status(400).send({

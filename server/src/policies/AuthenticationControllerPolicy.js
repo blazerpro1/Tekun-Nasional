@@ -47,11 +47,6 @@ module.exports = {
               `
                     })
                     break
-                // case 'confirmPassword':
-                //     res.status(400).send({
-                //         error: 'Password and Confirm Password must be the same'
-                //     })
-                //     break
                 default:
                     res.status(400).send({
                         error: 'Invalid registration information'

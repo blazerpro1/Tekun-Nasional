@@ -20,39 +20,6 @@ oAuth2Client.setCredentials({
     refresh_token: REFRESH_TOKEN
 });
 
-// async function sendMail() {
-//     try {
-//         const accessToken = await oAuth2Client.getAccessToken();
-
-//         const transport = nodemailer.createTransport({
-//             service: 'gmail',
-//             auth: {
-//                 type: 'OAuth2',
-//                 user: 'tekuntesting123@gmail.com',
-//                 clientId: CLIENT_ID,
-//                 clientSecret: CLEINT_SECRET,
-//                 refreshToken: REFRESH_TOKEN,
-//                 accessToken: accessToken,
-//             },
-//         });
-
-//         const mailOptions = {
-//             from: 'Mak kau ijau <tekuntesting123@gmail.com>',
-//             to: 'yougotfoolmike@gmail.com',
-//             subject: 'Hello from gmail using API',
-//             text: 'Hello from gmail email using API',
-//             html: '<h1>Hello from gmail email using API</h1>',
-//         };
-
-//         const result = await transport.sendMail(mailOptions);
-//         return result;
-//     } catch (error) {
-//         return error;
-//     }
-// }
-
-
-
 module.exports = {
 
     sendMail: async (email, messageBody) => {
@@ -89,42 +56,5 @@ module.exports = {
         }
 
     },
-
-    //WHY DOESN'T THIS WORK? LOL
-    // sendResetMail: async (email, messageBody) => {
-    //     console.log(`[ResetEmail] ${email}: ${messageBody}`);
-    //     try {
-    //         const accessToken = await oAuth2Client.getAccessToken();
-
-    //         const transport = nodemailer.createTransport({
-    //             service: 'gmail',
-    //             auth: {
-    //                 type: 'OAuth2',
-    //                 user: 'tekuntesting123@gmail.com',
-    //                 clientId: CLIENT_ID,
-    //                 clientSecret: CLEINT_SECRET,
-    //                 refreshToken: REFRESH_TOKEN,
-    //                 accessToken: accessToken,
-    //             },
-    //         });
-
-    //         const mailOptions = {
-    //             from: 'TEKUN NASIONAL <tekuntesting123@gmail.com>',
-    //             to: email,
-    //             subject: 'TEKUN NASIONAL',
-    //             text: messageBody,
-    //             html: `<h1>${messageBody}</h1>`,
-    //         };
-    //         console.log("cibai")
-    //         const result = await transport.sendMail(mailOptions);
-    //         console.log("cibai2")
-            
-
-    //         return result;
-    //     } catch (error) {
-    //         return error;
-    //     }
-
-    // },
 
 }
